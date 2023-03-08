@@ -7,7 +7,7 @@ async function signup(
 	name: string,
 	email: string,
 	password: string
-): Promise<void> {
+): Promise<User> {
 	const user = new User();
 	user.name = name;
 	user.email = email;
@@ -34,6 +34,17 @@ async function signup(
 
 	await AppDataSource.manager.save(welcomeTodo);
 	await AppDataSource.manager.save(howTodo);
+
+	return user;
 }
 
-export { signup };
+async function signin(email: string, password: string): Promise<User> {
+	const [userInfoInDB] = await AppDataSource.manager.find(User, {
+		where: {
+			email,
+		},
+	});
+	return userInfoInDB;
+}
+
+export { signup, signin };
