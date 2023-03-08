@@ -20,6 +20,3 @@ const AppDataSource = new DataSource({
 });
 
 export default AppDataSource;
-
-//왜 여기에다 AppDataSource.initialize() 쓰면 서버가 안 켜질까
-//즌쯔 궁금하다...
