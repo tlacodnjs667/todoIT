@@ -1,10 +1,12 @@
 import * as express from 'express';
+import { checkAuthentication } from '../utils/checkAuthentication';
 const router = express.Router();
+import * as categoryController from '../controllers/categoryController';
 
-router.post('get');
-router.post('create');
-router.post('delete');
-router.post('modify');
+router.get('', checkAuthentication, categoryController.getCategory);
+router.post('/create', checkAuthentication, categoryController.createCategory);
+router.post('/delete', checkAuthentication, categoryController.deleteCategory);
+router.post('/modify', checkAuthentication, categoryController.modifyCategory);
 
 export default router;
 
