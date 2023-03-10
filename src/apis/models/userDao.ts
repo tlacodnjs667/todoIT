@@ -32,8 +32,7 @@ async function signup(
 	howTodo.user = user;
 	howTodo.progressDate = new Date();
 
-	await AppDataSource.manager.save(welcomeTodo);
-	await AppDataSource.manager.save(howTodo);
+	await AppDataSource.manager.save([welcomeTodo, howTodo]);
 
 	return user;
 }
