@@ -7,7 +7,6 @@ async function createCategory(userId: number, name: string) {
 	/*
     1. 해당 유저의 category 개수가 5개를 넘지 않는지 체크
     2. 해당 유저의 중복 이름이 존재하는지 체크 
-    정도??
     */
 	const checkCategoryCount = await categoryDao.checkCateogryBeforeAction(
 		userId
@@ -38,8 +37,7 @@ async function deleteCategory(userId: number, categoryId: number | number[]) {
 async function modifyCategory(
 	userId: number,
 	categoryId: number,
-	name?: string,
-	isDefault?: boolean
+	name?: string
 ) {
 	const InfoTocheck = await categoryDao.checkCateogryBeforeAction(
 		userId,
@@ -49,7 +47,9 @@ async function modifyCategory(
 	if (!InfoTocheck.length)
 		throw new Error('CANNOT_FOUND_DATA_ACCORDING_TO_THE_CRITERIA');
 
-	await categoryDao.modifyCategoryName(userId, categoryId, name);
+	return categoryDao.modifyCategory(userId, categoryId, name);
+
+	//default category 확인하기
 }
 
 export { getCategory, createCategory, deleteCategory, modifyCategory };

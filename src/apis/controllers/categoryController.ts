@@ -27,9 +27,9 @@ async function deleteCategory(req: CustomizedRequest, res: Response) {
 }
 async function modifyCategory(req: CustomizedRequest, res: Response) {
 	const { user } = req;
-	const { categoryId, name, isDefault } = req.body;
+	const { categoryId, name } = req.body;
 	if (!user || !categoryId) throw new Error('NOT_FOUND_REQUESTED_ELEMENT');
-	await categoryService.modifyCategory(user, categoryId, name, isDefault);
+	await categoryService.modifyCategory(user, categoryId, name);
 	return res.status(205).json({ message: 'INFORMATION_MODIFIED' });
 	//205 =>     RESET_CONTENT
 }

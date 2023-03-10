@@ -26,7 +26,7 @@ function createCategory(name: string, userId: number) {
 function deleteCategory(userId: number, categoryId: number | number[]) {
 	return AppDataSource.manager.delete(Category, { id: categoryId, userId });
 }
-function modifyCategoryName(userId: number, categoryId: number, name?: string) {
+function modifyCategory(userId: number, categoryId: number, name?: string) {
 	return AppDataSource.manager.update(
 		Category,
 		{ userId, id: categoryId },
@@ -39,5 +39,5 @@ export {
 	checkCateogryBeforeAction,
 	createCategory,
 	deleteCategory,
-	modifyCategoryName,
+	modifyCategory,
 };
