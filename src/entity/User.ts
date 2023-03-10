@@ -5,6 +5,7 @@ import {
 	OneToMany,
 	JoinColumn,
 } from 'typeorm';
+import { Category } from './Category';
 import { Diary } from './Diary';
 import { Todo } from './Todo';
 
@@ -21,6 +22,10 @@ export class User {
 
 	@Column({ type: 'varchar', length: '200', nullable: false })
 	password: string;
+
+	@JoinColumn()
+	@OneToMany(() => Category, (category) => category.userId)
+	categories: Category[];
 
 	@JoinColumn()
 	@OneToMany(() => Diary, (diary) => diary.user)
