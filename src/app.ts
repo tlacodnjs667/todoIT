@@ -4,7 +4,7 @@ import * as cors from 'cors';
 import * as morgan from 'morgan';
 import routes from './apis/routes';
 import AppDataSource from './data-source';
-import globalErrorHandler from './apis/utils/error';
+import { globalErrorHandler } from './apis/utils/error';
 
 const app = express();
 
