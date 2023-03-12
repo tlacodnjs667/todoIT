@@ -12,7 +12,7 @@ const getDiaries = catchAsync(async (req: CustomizedRequest, res: Response) => {
 	//diary에 날짜 필터가 있으면 참 좋을 것 같은데, 기간 내로 할지, 하루하루로 할 지 못 정하겠어.
 	// diary랑 todo랑 같이 반환할 수 있으면 참 좋을텐데 이걸 어떻게 할까
 	const { user } = req;
-	const { offset } = req.params;
+	const { offset } = req.query;
 
 	const result = await diaryService.getDiaries(user, +offset);
 	//프론트에서 페이지 네이션에 알맞은 값을 보내줄지, 아니면 백에서 처리할 지를 골라야함.

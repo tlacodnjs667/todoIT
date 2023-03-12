@@ -24,7 +24,7 @@ export class User {
 	password: string;
 
 	@JoinColumn()
-	@OneToMany(() => Category, (category) => category.userId)
+	@OneToMany(() => Category, (category) => category.user)
 	categories: Category[];
 
 	@JoinColumn()

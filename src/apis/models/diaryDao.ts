@@ -4,47 +4,75 @@
 
 import AppDataSource from '../../data-source';
 import { Diary } from '../../entity/Diary';
-const checkDiaryOfMaster = async (diaryId: number) => {
-	return AppDataSource.manager.find(Diary, diaryId);
-};
-//그렇기 때문에 해당 user의 총 일기 갯수도 반환하는 것이 좋겠음!
-const getDiaries = async (user: number, offset: number) => {
-	return AppDataSource.manager.find(Diary, { user, skip: offset, take: 10 });
+import { IModifyType } from '../utils/IResponse';
+
+const checkDiaryOfMaster = async (diaryId: number): Promise<Diary[]> => {
+	return AppDataSource.manager.find(Diary, {
+		where: {
+			id: diaryId,
+		},
+		relations: {
+			user: true,
+		},
+	});
 };
 
-const getCountForPagenation = (user: number) => {
+const getDiaries = async (user: number, offset: number): Promise<Diary[]> => {
+	return AppDataSource.manager.find(Diary, {
+		select: {
+			id: true,
+			title: true,
+			content: true,
+			targetDate: true,
+		},
+		relations: {
+			user: true,
+		},
+		where: {
+			'user.id': user,
+		},
+	});
+}; // user 테이블 join 시 password 함께 반환되는 문제 해결 필요.
+//그렇기 때문에 해당 user의 총 일기 갯수도 반환하는 것이 좋겠음!
+const getCountForPagenation = (user: number): Promise<number> => {
 	return AppDataSource.manager.countBy(Diary, { user });
-};
+}; // 개수 타입 어떻게 나오는지 확인해야 함
 
 const writeDiaries = async (
 	user: number,
 	title: string,
 	content: string,
 	date: Date
-) => {
+): Promise<Diary> => {
 	const diaryToSave = await AppDataSource.manager.create(Diary, {
 		user,
 		title,
 		content,
+		targetDate: date,
 	});
 
 	await AppDataSource.manager.save(diaryToSave);
 
 	return diaryToSave;
 };
+
 const deleteDiary = async (diaryId: number) => {
-	return AppDataSource.manager.delete(Diary, diaryId);
+	const result = await AppDataSource.manager.delete(Diary, diaryId);
+
+	return result;
 };
 
 const rewriteDiaries = async (
 	diaryId: number,
 	title: string,
 	content: string
-) => {
-	return AppDataSource.manager.update(Diary, diaryId, {
+): Promise<IModifyType> => {
+	const result = await AppDataSource.manager.update(Diary, diaryId, {
 		title,
 		content,
 	});
+	console.log(result);
+	return result;
 };
 
 export {

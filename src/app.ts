@@ -21,11 +21,10 @@ app.get('/ping', async (req: Request, res: Response) => {
 	return res.status(200).json({ message: 'PONG' });
 });
 
-const start = (): void => {
+const start = () => {
 	try {
-		app.listen(3000, () => {
-			console.log('SERVER IS LISTENING ON PORT 3000');
-		});
+		app.listen(3000, () => console.log('SERVER IS LISTENING ON PORT 3000'));
+
 		AppDataSource.initialize()
 			.then(() => {
 				console.log('DATASOURCE HAS BEEN INITIALIZED');
