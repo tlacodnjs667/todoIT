@@ -6,11 +6,14 @@ export class Diary {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column()
+	@Column({ type: 'varchar', length: '100', nullable: false })
 	title: string;
 
-	@Column()
+	@Column({ type: 'varchar', length: '1000', nullable: false })
 	content: string;
+
+	@Column({ type: 'date', nullable: false })
+	targetDate: Date;
 
 	@ManyToOne(() => User, (user) => user.diaries, {
 		nullable: false,
