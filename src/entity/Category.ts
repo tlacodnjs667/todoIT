@@ -24,7 +24,7 @@ export class Category {
 		onDelete: 'CASCADE',
 		nullable: false,
 	})
-	userId: User;
+	user: User;
 
 	@JoinColumn()
 	@OneToMany(() => Todo, (todo) => todo.category)

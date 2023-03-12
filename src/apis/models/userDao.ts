@@ -8,16 +8,21 @@ async function signup(
 	email: string,
 	password: string
 ): Promise<User> {
-	const user = new User();
-	user.name = name;
-	user.email = email;
-	user.password = password;
+	// const user = new User();
+	const user = AppDataSource.manager.create(User, {
+		name,
+		email,
+		password,
+	});
+
 	await AppDataSource.manager.save(user);
 
-	const defaultCategory = new Category();
-	defaultCategory.name = '기본';
-	defaultCategory.userId = user;
-	defaultCategory.isDefault = true;
+	const defaultCategory = AppDataSource.manager.create(Category, {
+		name,
+		user: user.id,
+		isDefault: true,
+	});
+
 	await AppDataSource.manager.save(defaultCategory);
 
 	const welcomeTodo = new Todo();
